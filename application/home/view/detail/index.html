@@ -1,0 +1,301 @@
+<{extend name="base"/}>
+<{block name="title"}>
+<style>
+    .activity-image {
+        overflow: hidden;
+        margin: 10px auto;
+    }
+
+    .activity-image img {
+        width: 100%;
+    }
+</style>
+<link rel="stylesheet" href="__STATIC__/home/vender/Swiper-3.4.2/swiper.min.css">
+<link rel="stylesheet" href="__STATIC__/home/css/detail.css">
+<link rel="stylesheet" href="__STATIC__/home/css/activity.css">
+
+<title><{empty name="$baseData.detail.title"}>无法找到该商品<{else/}><{$baseData.detail.title}><{/empty}>-<{$Think.config.system.website_title}></title>
+<meta name="description" content="<{$Think.config.system.website_description}>"/>
+<meta name="keywords" content="<{$Think.config.system.website_Keywords}>"/>
+<{/block}>
+<{block name="content"}>
+<!-- activity image  start-->
+<div class="container activity-image">
+    <img src="https://img.alicdn.com/imgextra/i3/97012073/TB2Y9MifItnpuFjSZFKXXalFFXa_!!97012073.jpg" alt="">
+
+</div>
+<!-- activity image  end-->
+
+<!-- product information start -->
+<{if condition="!empty($baseData['detail'])"}>
+<div class="container detail-container">
+    <div class="image-container">
+        <a href="javascript:void(0)" target="_blank">
+            <img src="<{$baseData.detail.pict_url}>"
+                 title="<{$baseData.detail.pict_url}>" alt="<{$baseData.detail.pict_url}>"/>
+        </a>
+
+    </div>
+    <div class="detail-info">
+        <a class="detail-title">
+            <{switch name='$baseData.detail.user_type'}>
+            <{case value='1'}>
+            <i class="icon-product-type tmall" title="天猫"></i>
+            <{/case}>
+            <{case value='0'}>
+            <i class="icon-product-type taobao" title="淘宝"></i>
+            <{/case}>
+
+            <{default /}>
+            <{/switch}>
+
+
+            <span><{$baseData.detail.title}></span>
+        </a>
+        <{if condition="isset($baseData['detail']['item_description']) && !empty($baseData['detail']['item_description'])"}>
+        <div class="detail-reason">
+            <span>推荐理由:</span>
+            <span><{$baseData['detail']['item_description']}></span>
+
+        </div>
+        <{/if}>
+        <div class="detail-price">
+            <span class="detail-price-list">
+                <b class="red">（独享价）</b>
+                <b>券后价</b>
+                <span class="price">
+                    <b>¥</b>
+                    <b><{$baseData.detail.zk_final_price-$baseData.detail.coupon_info}></b>
+                </span>
+
+            </span>
+            <span class="detail-price-list">
+                <b>在售价</b>
+                <span class="price">
+                    <b>¥</b>
+                    <b><{$baseData.detail.zk_final_price}></b>
+                </span>
+            </span>
+        </div>
+        <div class="detail-quan-container">
+            <div class="detail-quan">
+                <span>已领券<b><{$baseData.detail.coupon_total_count-$baseData.detail.coupon_remain_count}></b>张，手慢无</span>
+                <span>已有<b><{$baseData.detail.volume}></b>人购买</span>
+            </div>
+        </div>
+        <div class="detail-to-buy">
+            <div class="quan-price">
+                <span>优惠券</span>
+                <span><b>¥</b><{$baseData.detail.coupon_info}></span>
+            </div>
+            <a class="link-to-buy" href="<{$baseData.detail.coupon_click_url}>" target="_blank">
+                领券购买
+            </a>
+        </div>
+        <div class="product-share">
+            <span>如果您喜欢此宝贝，记得分享给您的朋友，一起享优惠：</span>
+            <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more">分享到：</a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友">QQ好友</a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a></div>
+        </div>
+
+    </div>
+    <div class="product-association">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <{if condition="!empty($baseData['more'])"}>
+                <{foreach $baseData['more'] as $more}>
+                <div class="swiper-slide">
+                    <div class="inner">
+                        <a href="<{:url('detail/index',['id'=>$more.id])}>" target="_self">
+                            <img src="<{$more.pict_url}>" alt="<{$more.title}>" title="<{$more.title}>"/>
+                        </a>
+                        <span>券后价：¥<{:floor($more.zk_final_price-$more.coupon_info)}></span>
+                    </div>
+                </div>
+                <{/foreach}>
+                <{else/}>
+                <{/if}>
+
+            </div>
+        </div>
+        <!-- 导航按钮 -->
+        <div class="swiper-button">
+            <a class="swiper-button-up">
+                <i class="iconfont icon-up"></i>
+            </a>
+            <a class="swiper-button-down">
+                <i class="iconfont icon-down"></i>
+            </a>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+</div>
+<{else/}>
+<div class="container detail-container">
+    <h3 style="font-size: 20px;text-align: center;">无法找到该商品，或许你会喜欢</h3>
+</div>
+
+<{/if}>
+
+
+
+<!-- product information end -->
+
+<!--相关推荐 start-->
+<div class="container product-more">
+    <div class="list-title">
+        <h3>你可能还喜欢</h3>
+    </div>
+    <div class="list-description">
+        <span>价格最低</span>
+        <span>将性价比做到极致</span>
+        <span>商家内部券</span>
+    </div>
+</div>
+
+<!--相关推荐 end-->
+
+
+<!--活动商品列表 start-->
+
+<section class="list-container realtime-products">
+    <div class="list-products realtime-products">
+
+        <{if condition="!empty($baseData['favorites'])"}>
+        <{foreach $baseData['favorites'] as $quan}>
+        <div class="product-item realtime-product-item">
+            <div class="icon-quan">
+                <span>券</span><span>¥<{$quan.coupon_info}></span>
+
+            </div>
+            <div class="product-content">
+                <div class="image-link">
+                    <a href="<{:url('detail/index',['id'=>$quan.id])}>" target="_self">
+                        <img class="lazy-load" data-original="<{$quan.pict_url}>" src="<{$quan.pict_url}>"
+                             alt="<{$quan.title}>" title="<{$quan.title}>">
+                    </a>
+                    <div class="link-title">
+                        <a class="link-list" href="<{$quan.click_url}>" target="_blank">直接购买
+                        </a>
+                        <a class="link-list" href="<{$quan.coupon_click_url}>" target="_blank">领券购买
+                        </a>
+                    </div>
+                    <div class="link-background"></div>
+                </div>
+
+                <p class="volume-info">本月已有<span><{$quan.volume}></span>人购买</p>
+                <a href="<{:url('detail/index',['id'=>$quan.id])}>" target="_self" class="a-title">
+                    <{switch name='$quan.user_type'}>
+                    <{case value='1'}>
+                    <i class="tmall" title="天猫"></i>
+                    <{/case}>
+                    <{case value='0'}>
+                    <i class="taobao" title="淘宝"></i>
+                    <{/case}>
+                    <{default /}>
+                    <{/switch}>
+                    <{$quan.title}></a>
+                <div class="layui-progress" lay-showPercent="yes">
+                    <div class="layui-progress-bar"
+                         lay-percent="<{:round(($quan.coupon_total_count-$quan.coupon_remain_count)*100/$quan.coupon_total_count)}>%"></div>
+                </div>
+                <div class="price-info">
+                    <div class="now-price price-list">
+                        <p><b>¥</b><{:floor($quan.zk_final_price-$quan.coupon_info)}></p>
+                        <p>券后价</p>
+                    </div>
+                    <div class="quan price-list">
+                        <p><b>¥</b><{$quan.coupon_info}></p>
+                        <p>优惠券</p>
+                    </div>
+                    <div class="old-price price-list">
+                        <p><b>¥</b><{:floor($quan.zk_final_price)}></p>
+                        <p>原价</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="product-num-type">
+                    <div class="product-num">
+                        <span class="product-sale-num">销量
+                            <b><{$quan.volume}></b>
+                        </span>
+                    </div>
+                    <div class="product-type">
+                        <{switch name='$quan.user_type'}>
+                        <{case value='1'}>
+                        <i class="tmall" title="天猫"></i>
+                        <{/case}>
+                        <{case value='0'}>
+                        <i class="pinpai" title="品牌"></i>
+                        <{/case}>
+                        <{default /}>
+                        <{/switch}>
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="border-line"></div>
+                <p class="quan-num">优惠券剩余量<b><{$quan.coupon_remain_count}></b>/<{$quan.coupon_total_count}></p>
+                <p class="seller-name">店铺名：<b><{$quan.nick}></b></p>
+
+            </div>
+        </div>
+        <{/foreach}>
+        <{else/}>
+        <div class="empty" style="text-align: center">
+            <i class="iconfont icon-meiyougengduo" style="font-size: 180px;"></i>
+            <h1 style="font-size: 30px">客官，暂时没有更多推荐哦</h1>
+        </div>
+        <{/if}>
+        <div class="clearfix"></div>
+    </div>
+</section>
+
+<!--活动商品列表- end-->
+
+<!--分页-->
+<div id="page"></div>
+
+
+<{/block}>
+
+<{block name="js"}>
+<script type="text/javascript" src="__STATIC__/home/js/base.js">
+</script>
+<script type="text/javascript" src="__STATIC__/home/vender/Swiper-3.4.2/swiper-3.4.2.jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'vertical',
+            speed: 1000,
+            //loop: true,
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+
+            //autoplay: 5000,//可选选项，自动滑动
+            //preventClicks: false,//默认true
+            //autoplayDisableOnInteraction: false, //用户操作swiper之后，是否禁止autoplay。默认为true：停止。
+
+            // 如果需要前进后退按钮
+            nextButton: '.swiper-button-down',
+            prevButton: '.swiper-button-up'
+
+        });
+
+    });
+
+
+</script>
+<script type="text/javascript">
+    layui.use(['element'], function () {
+        var element = layui.element();
+
+    });
+    var pict_url = '<{notempty name="$baseData.detail.pict_url"}><{$baseData.detail.pict_url}><{/notempty}>';
+</script>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":pict_url,"bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<{/block}>
+
+

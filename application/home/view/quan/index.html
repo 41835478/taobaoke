@@ -1,0 +1,224 @@
+<{extend name="base"/}>
+<{block name="title"}>
+<link rel="stylesheet" href="__STATIC__/home/css/list.css">
+<title>领券直播-<{$Think.config.system.website_title}></title>
+<meta name="description" content="领券直播，<{$Think.config.system.website_description}>"/>
+<meta name="keywords" content="领券直播，<{$Think.config.system.website_Keywords}>"/>
+<{/block}>
+<{block name="content"}>
+<!-- activity image  start-->
+<div class="activity-image">
+    <img src="https://img.alicdn.com/imgextra/i3/97012073/TB2Y9MifItnpuFjSZFKXXalFFXa_!!97012073.jpg" alt="">
+
+</div>
+<!-- activity image  end-->
+
+<!-- choose category and type start -->
+<div class="choose-container">
+    <div class="choose-list product-category">
+        <span class="title">商品分类</span>
+        <div class="list">
+            <a class="<{if condition='isset($urlInfo.cid)'}><{eq name='$urlInfo.cid' value='all'}>active<{/eq}><{/if}>" href="<{:url('quan/index')}>">全部优惠<span>（<{$baseData['cate']['totalNum']}>）</span></a>
+            <{if condition="!empty($baseData['cate']['cateInfo'])"}>
+            <{foreach $baseData['cate']['cateInfo'] as $cate}>
+            <a class="<{if condition='isset($urlInfo.cid) && ($urlInfo.cid === $cate.id)'}>active<{/if}>" href="<{:url('quan/index',['cid'=>$cate.id])}>"><{$cate.cate_name}><span>（<{$cate.total}>）</span></a>
+            <{/foreach}>
+            <{else/}>
+            <{/if}>
+
+        </div>
+    </div>
+    <div class="choose-list onsale-type">
+        <span class="title">促销类型</span>
+        <div class="list">
+            <div class="checkbox-list">
+                <a class="<{if condition='isset($urlInfo.type) && $urlInfo.type ==1'}>active<{/if}>" href="<{:url('quan/index',['cid'=>$urlInfo.cid,'type'=>1])}>" target="_self">
+                    <i class="iconfont icon-checkbox"></i>
+                    天猫
+                </a>
+            </div>
+<!--            <div class="checkbox-list">
+                <input type="checkbox" id="tmall" name="tmall" value="1" />
+                <label for="tmall">
+                    <i class="iconfont icon-checkbox"></i>
+                    天猫
+                </label>
+            </div>-->
+            <{if condition="!empty($baseData['activity'])"}>
+            <{foreach $baseData['activity'] as $activity}>
+            <div class="checkbox-list">
+                <a class="<{if condition='isset($urlInfo.aid) && $urlInfo.aid == $activity.id'}>active<{/if}>" href="<{:url('quan/index',['cid'=>$urlInfo.cid,'aid'=>$activity.id])}>" target="_self">
+                    <i class="iconfont icon-checkbox"></i>
+                    <{$activity.activity_name}>
+                </a>
+            </div>
+            <{/foreach}>
+            <{else/}>
+            <{/if}>
+
+            <div class="checkbox-list confirm">
+                <!--<button class="btn btn-confirm" type="button" name="button">确定</button>-->
+                <a href="<{:url('quan/index',['cid'=>$urlInfo.cid])}>" class="btn btn-reset" name="button">重置</a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- choose category and type end -->
+
+<!--product sort type start-->
+<div class="product-sort-container">
+    <ul class="product-sort-list">
+        <li class="sort-list <{eq name='$urlInfo.sort' value='multiple'}>active<{/eq}>" >
+            <a href="<{:url('quan/index',array_merge($urlInfo,['sort'=>'multiple']))}>" data-sort="1">综合</a>
+        </li>
+        <li class="sort-list <{eq name='$urlInfo.sort' value='latest'}>active<{/eq}>">
+            <a href="<{:url('quan/index',array_merge($urlInfo,['sort'=>'latest']))}>" data-sort="2">最新</a>
+        </li>
+        <li class="sort-list <{eq name='$urlInfo.sort' value='volume'}>active<{/eq}>" >
+            <a href="<{:url('quan/index',array_merge($urlInfo,['sort'=>'volume']))}>" data-sort="3">销量</a>
+        </li>
+        <li class="sort-list <{eq name='$urlInfo.sort' value='quan'}>active<{/eq}>">
+            <a href="<{:url('quan/index',array_merge($urlInfo,['sort'=>'quan']))}>" data-sort="4">领券量</a>
+        </li>
+        <li class="sort-list <{eq name='$urlInfo.sort' value='price'}>active<{/eq}>" >
+            <a href="<{:url('quan/index',array_merge($urlInfo,['sort'=>'price']))}>" data-sort="5">价格</a>
+        </li>
+    </ul>
+    <ul class="page-items">
+        <li class="item">
+            <a class="link-left" href="<{:url('quan/index',array_merge($urlInfo,['page'=>$pageInfo.cur-1]))}>">
+                <i class="iconfont icon-left"></i>
+            </a>
+        </li>
+        <li class="item">
+            <span><{$pageInfo.cur}></span>/<span><{$pageInfo.totalPage}></span>
+        </li>
+        <li class="item">
+            <a class="link-right" href="<{:url('quan/index',array_merge($urlInfo,['page'=>$pageInfo.cur+1]))}>">
+                <i class="iconfont icon-right"></i>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+<!--product sort type end-->
+
+
+
+<!-- 领券优惠直播 start -->
+<section class="list-container realtime-products">
+    <div class="list-products realtime-products">
+
+        <{if condition="!empty($baseData['quan'])"}>
+        <{foreach $baseData['quan'] as $quan}>
+        <div class="product-item realtime-product-item">
+            <a href="<{:url('detail/index',['id'=>$quan.id])}>" target="_blank">
+                <!--<img class="lazy-load" data-original="<{$quan.pict_url}>" src="__STATIC__/home/images/lazy.jpg"
+                     alt="<{$quan.title}>" title="<{$quan.title}>">-->
+                <img class="lazy-load" data-original="<{$quan.pict_url}>" src="<{$quan.pict_url}>"
+                     alt="<{$quan.title}>" title="<{$quan.title}>">
+            </a>
+            <div class="price-quan">
+
+                <i class="icon-cny">¥</i>
+                <span class="now-price"><{:floor($quan.zk_final_price-$quan.coupon_info)}></span>
+                <span class="title">券后价</span>
+                <span class="old-price">
+                        <i class="icon-cny">¥</i>
+                        <{:floor($quan.zk_final_price)}></span>
+                <div class="quan-show">
+                    <em class="left"></em>
+                    <span class="quan-name">券</span>
+                    <span class="quan-price">¥<{$quan.coupon_info}></span>
+                    <em class="right"></em>
+                </div>
+            </div>
+            <div class="border-line">
+
+            </div>
+            <p class="title"><a href="<{:url('detail/index',['id'=>$quan.id])}>" target="_blank"><{$quan.title}></a></p>
+            <div class="product-num-type">
+                <div class="product-num">
+                        <span class="product-sale-num"><{if condition="$urlInfo.sort =='quan'"}>领券量<{else/}>销量<{/if}>
+                            <b><{if condition="$urlInfo.sort =='quan'"}><{$quan.coupon_total_count-$quan.coupon_remain_count}><{else/}><{$quan.volume}><{/if}></b>
+                        </span>
+                </div>
+                <div class="product-type">
+                    <{switch name='$quan.user_type'}>
+                    <{case value='1'}>
+                    <i class="icon-product-type tmall" title="天猫"></i>
+                    <{/case}>
+                    <{case value='0'}>
+                    <i class="icon-product-type pinpai" title="淘宝"></i>
+                    <{/case}>
+                    <{default /}>
+                    <{/switch}>
+
+                    <!--
+                   <i class="miaosha" title="秒杀"></i>
+                    <i class="tmall" title="天猫"></i>
+                    <i class="trans" title="运费险"></i>
+                    <i class="you" title="优品"></i>
+                    <i class="pinpai" title="品牌"></i>
+                    <i class="haitao" title="海淘"></i>
+                    -->
+                </div>
+                <div class="clearfix">
+                </div>
+
+            </div>
+
+        </div>
+        <{/foreach}>
+        <{else/}>
+        <div class="empty" style="text-align: center">
+            <i class="iconfont icon-meiyougengduo" style="font-size: 180px;"></i>
+            <h1 style="font-size: 30px">客官，您可以移步去别的分类看看哦</h1>
+        </div>
+        <{/if}>
+
+
+        <div class="clearfix"></div>
+    </div>
+</section>
+<!-- 领券优惠直播 end -->
+
+<!--分页-->
+<div id="page"></div>
+
+
+<{/block}>
+
+<{block name="js"}>
+<script type="text/javascript">
+    var page = '<{$pageInfo["totalPage"]}>';
+    var cur = '<{$pageInfo["cur"]}>'
+</script>
+<script type="text/javascript" src="__STATIC__/home/js/base.js">
+</script>
+<script type="text/javascript">
+    layui.use(['laypage'], function(){
+        var laypage = layui.laypage;
+        laypage({
+            cont: 'page',
+            pages: page,
+            curr:cur,
+            skin:'#f8c',
+            skip: true,
+            jump:function (obj, first) {
+                if (!first) {
+                    //点击跳页触发函数自身，并传递当前页：obj.curr
+                    location.href= '<{:url("quan/index",$urlInfo)}>'+'?page='+obj.curr;
+                }
+
+            }
+        });
+
+    });
+</script>
+<{/block}>
+

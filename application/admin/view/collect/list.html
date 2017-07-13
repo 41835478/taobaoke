@@ -1,0 +1,101 @@
+<{extend name="base"/}>
+<{block name="title"}>
+<title>选库表列表</title>
+<style>
+    .padding-container{
+        padding: 20px;
+    }
+    .layui-form-radio{
+        width: 20%;
+        text-align: left;
+        white-space: nowrap;
+        overflow-x: hidden;
+
+    }
+
+    .input-width{
+        width: 100% !important;
+        text-align: center;
+    }
+
+    .center{
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .center .layui-btn{
+        margin:0 auto;
+    }
+    .layui-form-radio span{
+        white-space: nowrap;
+        overflow-x: hidden;
+        display: inline-block;
+    }
+
+</style>
+
+<{/block}>
+<{block name="content"}>
+<div class="padding-container">
+    <form class="layui-form">
+    <div class="layui-form-item center">
+        <div class="layui-input-inline input-width">
+            <input type="text" id="search" name="title"  placeholder="搜索" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+
+        <{foreach $list as $vo}>
+            <input type="radio" name="favorites_id" lay-filter="" value="<{$vo.favorites_id}>" title="<{$vo.favorites_title}>">
+        <{/foreach}>
+
+    </div>
+    <div class="layui-form-item center">
+        <button type="submit" class="layui-btn" lay-submit lay-filter="choose">确定</button>
+    </div>
+    </form>
+
+</div>
+
+<{/block}>
+<{block name="js"}>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    layui.use(['form','layer'],function () {
+        var form = layui.form();
+        var layer = layui.layer;
+        form.on('submit(choose)', function(data){
+            parent.$('#favorites_id').val(data.field.favorites_id);
+            var title = $("input[type='radio']:checked").attr('title');
+            parent.$('#favorites_name').val(title);
+            console.log(title);
+            layer_close();
+            //
+            //console.log(data) //当前容器的全部表单字段，名值对形式：{name: value}
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+    });
+
+    $('#search').bind('input propertychange', function() {
+        var _this = $(this);
+        if($(this).val().trim() ===''|| $(this).val().trim()===null){
+            $('.layui-form-radio').css('display','inline-block');
+            return false;
+        }
+        var pattern = new RegExp($(this).val());
+        $('.layui-form-radio').each(function () {
+
+            if(pattern.test($(this).find('span').text())){
+                $(this).css('display','inline-block')
+            }else{
+                $(this).css('display','none')
+            }
+        });
+    });
+
+</script>
+
+<{/block}>

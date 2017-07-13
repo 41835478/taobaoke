@@ -1,0 +1,17 @@
+{include file="header"/}
+<div class="c_main fr">
+<form action="{:url('index')}" method="post">
+    <div class="c_main_title">{:lang('step_eula_desc')}</div>
+    <div class="c_main_body eula">
+        {if condition = "isset($error_msg)"}
+        {$error_msg}
+        {/if}
+        {$eula_html}
+    </div>
+    <div class="act">
+        <div class="accept"><label><input type="checkbox" name="accept" class="input_checkbox" value="1" />&nbsp;&nbsp;{$Think.lang.i_accept}</label></div>
+        <div class="btn"><input type="submit" value="{:lang('next')}" class="btn_next" /></div>
+    </div>
+</form>
+</div>
+{include file="footer"/}

@@ -1,0 +1,331 @@
+<{extend name="base"/}>
+<{block name="title"}>
+<link rel="stylesheet" href="__STATIC__/home/vender/Swiper-3.4.2/swiper.min.css">
+<style>
+    .swiper-container .swiper-slide a {
+        display: block;
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        z-index: 9;
+        cursor: pointer;
+
+    }
+
+    .get-more {
+        text-align: center;
+        min-width: 990px;
+    }
+
+    .get-more a {
+        display: inline-block;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        background: #f8c;
+        height: 40px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        padding: 0 100px
+    }
+
+    .get-more a:hover {
+        opacity: 0.9;
+
+    }
+
+</style>
+<title><{$Think.config.system.website_title}></title>
+<meta name="description" content="<{$Think.config.system.website_description}>"/>
+<meta name="keywords" content="<{$Think.config.system.website_Keywords}>"/>
+
+<{/block}>
+<{block name="content"}>
+<!-- nav and carousel list start-->
+<div class="navigation-carousel">
+    <!-- navigation-cantainer -->
+    <div class="navigation-cantainer">
+        <ul class="navigation">
+            <{if condition="!empty($baseData['cate'])"}>
+            <{foreach $baseData['cate'] as $cate}>
+            <li class="category-item">
+                <i class="iconfont <{$cate.icon}>"></i>
+                <a href="<{:url('quan/index',['cid'=>$cate.id])}>" target="_blank"><{$cate.cate_name}></a>
+            </li>
+            <{/foreach}>
+            <{else/}>
+            <{/if}>
+
+        </ul>
+
+    </div>
+    <!-- carousel container -->
+    <div class="carousel-container swiper-container">
+        <div class="swiper-wrapper">
+            <{if condition="!empty($baseData['ad']['carousel'])"}>
+            <{foreach $baseData['ad']['carousel'] as $ad}>
+            <div class="swiper-slide">
+                <a href="<{$ad.link_url}>" target="_blank"
+                   style="background-image:url('__UPLOADS__/<{$ad.image_url}>');">
+                    <!--<img src="__STATIC__/home/images/slider-1.jpg"/>-->
+                </a>
+            </div>
+            <{/foreach}>
+            <{else/}>
+            <{/if}>
+        </div>
+        <!-- 分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 导航按钮 -->
+        <div class="swiper-button-prev swiper-button-white"></div>
+        <div class="swiper-button-next swiper-button-white"></div>
+    </div>
+    <!-- activity container -->
+    <div class="activity-container">
+        <{if condition="!empty($baseData['ad']['activity_1'])"}>
+        <div class="activity-item">
+            <a href="<{$baseData['ad']['activity_1'][0]['link_url']}>" target="_blank">
+                <img src="__UPLOADS__/<{$baseData['ad']['activity_1'][0]['image_url']}>" alt="">
+            </a>
+
+            <div class="activity-description">
+                <h5><{$baseData['ad']['activity_1'][0]['ad_name']}></h5>
+
+                <div class="banner">
+                    <p><a href="<{$baseData['ad']['activity_1'][0]['link_url']}>" target="_blank"><{$baseData['ad']['activity_1'][0]['ad_description']}></a>
+                    </p>
+
+                </div>
+                <div class="banner-background"></div>
+
+            </div>
+            <div class="activity-background"></div>
+        </div>
+        <{else/}>
+        <{/if}>
+
+        <{if condition="!empty($baseData['ad']['activity_2'])"}>
+        <div class="activity-item">
+            <a href="<{$baseData['ad']['activity_2'][0]['link_url']}>" target="_blank">
+                <img src="__UPLOADS__/<{$baseData['ad']['activity_2'][0]['image_url']}>" alt="">
+            </a>
+
+            <div class="activity-description">
+                <h5><{$baseData['ad']['activity_2'][0]['ad_name']}></h5>
+
+                <div class="banner">
+                    <p><a href="<{$baseData['ad']['activity_2'][0]['link_url']}>" target="_blank"><{$baseData['ad']['activity_2'][0]['ad_description']}></a>
+                    </p>
+
+                </div>
+                <div class="banner-background"></div>
+
+            </div>
+            <div class="activity-background"></div>
+        </div>
+        <{else/}>
+        <{/if}>
+
+    </div>
+    <div class="clearfix"></div>
+
+</div>
+
+<!-- nav and carousel list end-->
+
+<!-- quan miaosha choose start -->
+<section class="list-container second-kill">
+    <div class="list-title skill-title">
+        <h3>领券秒杀精选</h3>
+    </div>
+    <div class="list-description skill-description">
+        <span>实时更新</span>
+        <span>将优选、性价比做到极致</span>
+        <span>商家内部券</span>
+    </div>
+    <div class="list-products skill-products">
+
+        <{if condition="!empty($baseData['skill'])"}>
+        <{foreach $baseData['skill'] as $skill}>
+        <div class="product-item skill-product-item">
+            <a href="<{:url('detail/index',['id'=>$skill.id])}>" target="_blank">
+                <!-- <img class="lazy-load" data-original="<{$skill.pict_url}>" src="__STATIC__/home/images/lazy.jpg"
+                      alt="<{$skill.title}>" title="<{$skill.title}>">-->
+                <img class="lazy-load" data-original="<{$skill.pict_url}>" src="<{$skill.pict_url}>"
+                     alt="<{$skill.title}>" title="<{$skill.title}>">
+            </a>
+            <p class="title">
+                <a href="<{:url('detail/index',['id'=>$skill.id])}>" target="_blank"><i
+                        class="<{switch name='$skill.user_type'}><{case value='1'}>icon-product-type tmall<{/case}><{case value='0'}>icon-product-type pinpai<{/case}><{default /}><{/switch}>"></i><{$skill.title}></a>
+            </p>
+            <div class="border-line">
+
+            </div>
+            <div class="quan-detail">
+                <div class="quan-note">
+                    <div class="quan-show">
+                        <em class="left"></em>
+                        <span class="quan-name">券</span>
+                        <span class="quan-price">￥<{$skill.coupon_info}></span>
+                        <em class="right"></em>
+                    </div>
+                    <div class="quan-time">
+                        <span><strong><{$skill.coupon_end_time}></strong>过期</span>
+                    </div>
+                    <div class="clearfix">
+
+                    </div>
+
+                </div>
+                <div class="quan-num">
+                    <span>优惠券剩余<strong><{$skill.coupon_remain_count}></strong>张，已领取<strong><{$skill.coupon_total_count-$skill.coupon_remain_count}></strong>张</span>
+                </div>
+
+            </div>
+            <div class="quan-link">
+                <div class="quan-price">
+                    <div class="current-price">
+                        <span><{:floor($skill.zk_final_price-$skill.coupon_info)}></span>
+                    </div>
+                    <div class="old-price">
+                        <span>￥<{:floor($skill.zk_final_price)}></span>
+                        <span>券后价</span>
+                    </div>
+
+                </div>
+
+                <div class="to-buy">
+                    <a href="<{:url('detail/index',['id'=>$skill.id])}>" target="_blank">去下单</a>
+                </div>
+
+            </div>
+
+        </div>
+        <{/foreach}>
+        <{else/}>
+        <{/if}>
+
+
+        <div class="clearfix">
+
+        </div>
+
+    </div>
+</section>
+<!-- quan miaosha choose end -->
+
+<!-- 领券优惠直播 start -->
+<section class="list-container realtime-products">
+    <div class="list-title realtime-title">
+        <h3>领券优惠直播</h3>
+    </div>
+    <div class="list-description realtime-description">
+        <span>实时更新</span>
+        <span>将优选、性价比做到极致</span>
+        <span>商家内部券</span>
+    </div>
+    <div class="list-products realtime-products">
+        <{if condition="!empty($baseData['quan'])"}>
+        <{foreach $baseData['quan'] as $quan}>
+        <div class="product-item realtime-product-item">
+            <a href="<{:url('detail/index',['id'=>$quan.id])}>" target="_blank">
+                <!--<img class="lazy-load" data-original="<{$quan.pict_url}>" src="__STATIC__/home/images/lazy.jpg"
+                     alt="<{$quan.title}>" title="<{$quan.title}>">-->
+                <img class="lazy-load" data-original="<{$quan.pict_url}>" src="<{$quan.pict_url}>"
+                     alt="<{$quan.title}>" title="<{$quan.title}>">
+            </a>
+            <div class="price-quan">
+
+                <i class="icon-cny">¥</i>
+                <span class="now-price"><{:floor($quan.zk_final_price-$quan.coupon_info)}></span>
+                <span class="title">券后价</span>
+                <span class="old-price">
+                        <i class="icon-cny">¥</i>
+                        <{:floor($quan.zk_final_price)}></span>
+                <div class="quan-show">
+                    <em class="left"></em>
+                    <span class="quan-name">券</span>
+                    <span class="quan-price">¥<{$quan.coupon_info}></span>
+                    <em class="right"></em>
+                </div>
+            </div>
+            <div class="border-line">
+
+            </div>
+            <p class="title"><a href="<{:url('detail/index',['id'=>$quan.id])}>" target="_blank"><{$quan.title}></a></p>
+            <div class="product-num-type">
+                <div class="product-num">
+                        <span class="product-sale-num">销量
+                            <b><{$quan.volume}></b>
+                        </span>
+                </div>
+                <div class="product-type">
+                    <{switch name='$quan.user_type'}>
+                    <{case value='1'}>
+                    <i class="icon-product-type tmall" title="天猫"></i>
+                    <{/case}>
+                    <{case value='0'}>
+                    <i class="icon-product-type pinpai" title="淘宝"></i>
+                    <{/case}>
+                    <{default /}>
+                    <{/switch}>
+
+                </div>
+                <div class="clearfix">
+                </div>
+
+            </div>
+
+        </div>
+        <{/foreach}>
+        <{else/}>
+        <{/if}>
+
+
+        <div class="clearfix"></div>
+    </div>
+</section>
+<!-- 领券优惠直播 end -->
+
+<!--查看更多-->
+<div class="get-more" style="text-align: center">
+    <a href="<{:url('quan/index')}>">查看更多</a>
+</div>
+
+
+<{/block}>
+
+<{block name="js"}>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/home/vender/Swiper-3.4.2/swiper-3.4.2.jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'horizontal',
+            speed: 1000,
+            loop: true,
+            autoplay: 1500,//可选选项，自动滑动
+            preventClicks: false,//默认true
+            autoplayDisableOnInteraction: false, //用户操作swiper之后，是否禁止autoplay。默认为true：停止。
+            // 如果需要分页器
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+
+            // 如果需要前进后退按钮
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+
+        });
+
+    });
+
+
+</script>
+
+<{/block}>
+

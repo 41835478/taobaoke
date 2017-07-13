@@ -1,0 +1,190 @@
+﻿<{extend name="base"/}>
+<{block name="title"}>
+<title>系统设置页</title>
+<style>
+    .tabCon {
+        display: block;
+    }
+
+</style>
+<{/block}>
+<{block name="content"}>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+	<span class="c-gray en">&gt;</span>
+	系统管理
+	<span class="c-gray en">&gt;</span>
+	站点设置
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+	<form class="form form-horizontal" id="form-content" method="post" action="<{$data.method}>" enctype="multipart/form-data">
+		<div id="tab-system" class="HuiTab">
+			<div class="tabBar cl">
+				<span data-type="1" class="<{if condition='$data.type==1'}>current<{/if}>">基本设置</span>
+				<span data-type="2" class="<{if condition='$data.type==2'}>current<{/if}>">API设置</span>
+				<span data-type="3" class="<{if condition='$data.type==3'}>current<{/if}>">邮件设置</span>
+				<span data-type="4" class="<{if condition='$data.type==4'}>current<{/if}>">其他设置</span>
+			</div>
+
+            <{switch name="data.type"}>
+              <{case value="1"}>
+                    <div class="tabCon">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        <span class="c-red">*</span>
+                        网站名称：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="website-title" id="website-title" placeholder="控制在2-5字符之内以内" value="" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        <span class="c-red">*</span>
+                        关键词：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="website-Keywords" id="website-Keywords" placeholder="每个关键词之间用英文,隔开控制在50字符之内" value="" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        <span class="c-red">*</span>
+                        描述：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="website-description" id="website-description" placeholder="最好是80个汉字左右，控制在160个字符以内" value="" class="input-text">
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        <span class="c-red">*</span>
+                        底部版权信息：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="website-copyright" id="website-copyright" placeholder="类似&copy; 2016 www.baidu.com" value="" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">备案号：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="website-icp" id="website-icp" placeholder="京ICP备00000000号" value="" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">统计代码：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <textarea name="website-count" class="textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">淘点金代码：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <textarea name="website-taodianjin" class="textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+              <{/case}>
+              <{case value="2"}>
+                    <div class="tabCon">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">App Key：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="app_key" class="input-text" value="" placeholder="请到淘宝开放平台查看" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">App Secret：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="app_secret" class="input-text" value="" placeholder="请到淘宝开放平台查看" autocomplete="off"/>
+                    </div>
+                </div>
+            </div>
+              <{/case}>
+              <{case value="3"}>
+            <div class="tabCon">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">邮件发送模式：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text"  class="input-text" value="" id="" name="">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">SMTP服务器：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="" value="" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">SMTP 端口：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" class="input-text" value="25" id="" name="" >
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">邮箱帐号：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" class="input-text" value="5" id="emailName" name="emailName" >
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">邮箱密码：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="password" id="email-password" value="" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">收件邮箱地址：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="email-address" value="" class="input-text">
+                    </div>
+                </div>
+            </div>
+              <{/case}>
+              <{case value="4"}>
+            <div class="tabCon">
+            </div>
+              <{/case}>
+
+            <{/switch}>
+
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button id="system_submit" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</div>
+<{/block}>
+
+<{block name="js"}>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+<script type="text/javascript">
+
+    /* =======================================================================
+     * jQuery.Huitab.js 选项卡
+     * ========================================================================*/
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $(".tabBar span").on('click',function () {
+            var type = $(this).data('type');
+            window.location = '<{:url("system/index")}>'+'?type='+type;
+        });
+
+        //$(".tabBar span").Huitab();
+        //$.Huitab("#tab-system .tabBar span","#tab-system .tabCon","current","click","0");
+    });
+</script>
+<script type="text/javascript" src="__STATIC__/admin/static/js/system.form.validate.js"></script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+<{/block}>

@@ -1,0 +1,170 @@
+<{extend name="base"/}>
+<{block name="title"}>
+<link rel="stylesheet" href="__STATIC__/home/css/qiang.css">
+<title>领券直播-<{$Think.config.system.website_title}></title>
+<meta name="description" content="领券直播，<{$Think.config.system.website_description}>"/>
+<meta name="keywords" content="领券直播，<{$Think.config.system.website_Keywords}>"/>
+<{/block}>
+<{block name="content"}>
+<!-- 限时抢 背景图片 start -->
+<div class="qiang-title-container">
+    <div class="container qiang-nav">
+        <ul class="qiang-nav-inner">
+            <li class="on-qiang qiang-today <{switch name='time'}><{case value='0'}>active<{/case}><{/switch}>">
+                <a href="<{:url('skill/index',['time'=>0])}>"><b>00:00</b><span></span></a>
+            </li>
+            <li class="on-qiang qiang-today <{switch name='time'}><{case value='8'}>active<{/case}><{/switch}>">
+                <a href="<{:url('skill/index',['time'=>8])}>"><b>08:00</b><span></span></a>
+            </li>
+            <li class="on-qiang qiang-today <{switch name='time'}><{case value='12'}>active<{/case}><{/switch}>">
+                <a href="<{:url('skill/index',['time'=>12])}>"><b>12:00</b><span></span></a>
+            </li>
+            <li class="on-qiang qiang-today <{switch name='time'}><{case value='16'}>active<{/case}><{/switch}>">
+                <a href="<{:url('skill/index',['time'=>16])}>"><b>16:00</b><span></span></a>
+            </li>
+            <li class="on-qiang qiang-today <{switch name='time'}><{case value='20'}>active<{/case}><{/switch}>">
+                <a href="<{:url('skill/index',['time'=>20])}>"><b>20:00</b><span></span></a>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+</div>
+<!-- 限时抢 背景图片 end -->
+<ul class="container qiang-products-container">
+
+    <{if condition="!empty($baseData['skill'])"}>
+    <{foreach $baseData['skill'] as $skill}>
+    <div class="qiang-product-list">
+        <div class="pro-left">
+            <a href="<{$skill.coupon_click_url}>" target="_blank">
+                <img src="<{$skill.pict_url}>" alt="<{$skill.title}>">
+            </a>
+        </div>
+        <div class="pro-right">
+            <p class="title">
+                <a href="<{$skill.coupon_click_url}>" target="_blank"><{$skill.title}></a>
+            </p>
+            <div class="price-quan">
+
+                <i class="icon-cny">¥</i>
+                <span class="now-price"><{$skill.zk_final_price-$skill.coupon_info}></span>
+                <span class="title">券后价</span>
+                <span class="old-price">
+                        <i class="icon-cny">¥</i>
+                        <{$skill.zk_final_price}></span>
+                <div class="quan-show">
+                    <em class="left"></em>
+                    <span class="quan-name">券</span>
+                    <span class="quan-price">￥<{$skill.coupon_info}></span>
+                    <em class="right"></em>
+                </div>
+            </div>
+            <div class="sale-num">
+                <div class="sale-num-inner">
+                    <i class="iconfont icon-renqun"></i>
+                    <span>已有<b><{$skill.volume}></b>人购买</span>
+                </div>
+                <div class="clearfix">
+
+                </div>
+
+            </div>
+            <div class="pinpai-tobuy">
+                <div class="pinpai">
+                    <div class="pinpai-logo">
+                        <span><{$skill.nick}></span>
+                        <img src="" alt="<{$skill.nick}>" title="<{$skill.nick}>">
+                    </div>
+                    <span class="pinpai-text">店铺</span>
+
+                </div>
+                <div class="tobuy">
+                    <a href="<{$skill.coupon_click_url}>" target="_blank">去抢购</a>
+
+                </div>
+                <div class="clearfix">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <{/foreach}>
+    <{else/}>
+    <{/if}>
+
+
+
+
+    <div class="clearfix"></div>
+
+
+</ul>
+
+
+<!-- 限时抢 商品列表 end -->
+
+
+<{/block}>
+
+<{block name="js"}>
+<script type="text/javascript" src="__STATIC__/home/js/base.js"></script>
+<script type="text/javascript">
+    $(function() {
+        //滚动到顶部固定
+        var top = $('.qiang-products-container').offset().top - 40;
+        $(window).scroll(function(event) {
+            /* Act on the event */
+            if ($(window).scrollTop() > top) {
+                $('.qiang-nav-inner').addClass('container-fix')
+            } else {
+                $('.qiang-nav-inner').removeClass('container-fix')
+            }
+
+
+        });
+
+        //获取当前的时间
+        var date = new Date();
+        var hour = date.getHours();
+        if (hour < 8) {
+
+            $('.qiang-today:eq(0) span').addClass('on').text('正在抢购');
+            $('.qiang-today:gt(0) span').removeClass('on').text('即将开始');
+
+        }else if ( 8 <= hour && hour < 12) {
+
+
+            $('.qiang-today:lt(2) span').addClass('on').text('正在抢购');
+            $('.qiang-today:gt(1) span').removeClass('on').text('即将开始');
+
+
+        }else if (12 <= hour && hour < 16) {
+
+            $('.qiang-today:lt(3) span').addClass('on').text('正在抢购');
+            $('.qiang-today:gt(2) span').removeClass('on').text('即将开始');
+
+
+        }else if (16 <= hour && hour < 20) {
+
+            $('.qiang-today:lt(4) span').addClass('on').text('正在抢购');
+            $('.qiang-today:gt(3) span').removeClass('on').text('即将开始');
+
+        }else if (20 <= hour && hour < 24) {
+
+            $('.qiang-today span').addClass('on').text('正在抢购');
+        }
+
+
+    });
+</script>
+<{/block}>
+
+
+

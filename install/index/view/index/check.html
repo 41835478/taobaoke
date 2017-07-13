@@ -1,0 +1,21 @@
+{include file="header"/}
+<div class="c_main fr">
+<form action="{:url('check')}" method="post">
+    <div class="c_main_title">{:lang('step_check_desc')}</div>
+    <div class="c_main_body">
+        {volist name="error" id="val"}
+        <div class="error_msg">{$val}</div>
+        {/volist}
+    </div>
+    <div class="act">
+        <div class="btn">
+            {if condition="isset($error)"}
+            <input type="submit" class="btn_next" value="{:lang('recheck')}"/>
+            {else/}
+            <input type="submit" value="{:lang('next')}" class="btn_next" />
+            {/if}
+        </div>
+    </div>
+</form>
+</div>
+{include file="footer"/}

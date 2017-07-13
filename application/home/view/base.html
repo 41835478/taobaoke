@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!--<link rel="stylesheet" href="__STATIC__/home/vender/css/normalize.css">-->
+    <link rel="stylesheet" href="__STATIC__/home/vender/css/reset.css">
+    <link rel="stylesheet" href="__STATIC__/fonts/iconfont.css">
+    <link rel="stylesheet" href="__STATIC__/ui/css/layui.css">
+
+    <!-- bootstap -->
+    <!--<link rel="stylesheet" href="__STATIC__/home/vender/bootstrap-3.3.7/css/bootstrap.min.css">-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="__STATIC__/home/css/base.css">
+    <link rel="stylesheet" href="__STATIC__/home/css/index.css">
+
+    <{block name="title"}>
+    <title>首页</title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+
+    <{/block}>
+
+</head>
+
+<body>
+<!-- top site-nav start-->
+<div class="container-background">
+    <div class="site-nav">
+        <ul class="site-nav-left">
+            <li class="site-nav-welcome">
+                    <span class="welcome-text">
+                        亲爱的，来加粉丝专享优惠QQ群:<{$Think.config.system.qq_number}>
+                    </span>
+            </li>
+        </ul>
+        <ul class="site-nav-right">
+            <li class="site-nav-list">
+                <a href="javascript:void(0);">内部优惠券</a>
+            </li>
+            <li class="site-nav-list">
+                <a href="javascript:void(0);">实时更新</a>
+            </li>
+            <li class="site-nav-list">
+                <a href="#">遇到购物问题？请联系我</a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<!-- site-nav end-->
+
+<!-- header  start -->
+<header class="container-fluid container-padding" style="background-color: #ffffff;">
+    <div class="header-wrapper">
+        <div class="header-wraper-inner">
+            <!-- site logo -->
+            <a class="header-logo" href="#">
+                <img src="__STATIC__/home/images/logo-img.png" alt="" title=""/>
+            </a>
+            <!-- nav -list -->
+            <div class="header-ul-inner">
+                <ul class="header-nav">
+                    <li class="header-nav-list">
+                        <a class="header-nav-href <{eq name='$Request.controller' value='Index'}>active<{/eq}>"
+                           href="<{:url('index/index')}>" target="_self">首页</a>
+                    </li>
+                    <li class="header-nav-list">
+                        <a class="header-nav-href <{eq name='$Request.controller' value='Quan'}>active<{/eq}>"
+                           href="<{:url('quan/index')}>" target="_self">领券直播</a>
+                    </li>
+                    <li class="header-nav-list">
+                        <a class="header-nav-href <{eq name='$Request.controller' value='Skill'}>active<{/eq}>" href="<{:url('skill/index')}>" target="_self">咚咚抢</a>
+                    </li>
+                    <{if condition="!empty($baseData['activityData'])"}>
+                    <{foreach $baseData['activityData'] as $activityData}>
+                    <li class="header-nav-list">
+                        <a class="header-nav-href <{if condition='isset($urlInfo.aid)'}><{neq name='$Request.controller' value='Quan'}><{eq name='$urlInfo.aid' value='$activityData.id'}>active<{/eq}><{/neq}><{/if}>"
+                           href="<{:url('activity/index',['aid'=>$activityData.id])}>" target="_self"><{$activityData.activity_name}></a>
+                    </li>
+                    <{/foreach}>
+                    <{else/}>
+                    <{/if}>
+                    <li class="header-nav-list">
+                        <form class="search-form" method="get" action="<{:url('search/index')}>">
+                        <input type="text" class="input-search" name="keyword" value="" placeholder="请输入关键词"/>
+                        <button type="submit" class="btn btn-search">搜索</button>
+                        </form>>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!--header end  -->
+
+<{block name="content"}>
+<{/block}>
+
+<!-- footer start -->
+<footer class="footer">
+    <div class="inner-container">
+        <h1>“感谢有你，我们的坚持才更有意义”</h1>
+        <div class="copyright">
+            <p><{$Think.config.system.website_copyright}> </p>
+            <p><{$Think.config.system.website_title}> --- <{$Think.server.http_host}></p>
+
+        </div>
+
+    </div>
+
+</footer>
+<!-- footer end -->
+<!--返回顶部按钮-->
+<div class="scroll-to-top">
+    <i class="iconfont icon-top"></i>
+</div>
+<div class="scroll-background"></div>
+
+
+<!--_footer 作为公共模版分离出去-->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="__STATIC__/home/vender/js/jquery-1.10.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- <script type="text/javascript" src="./static/vender/bootstrap-3.3.7/js/bootstrap.min.js"></script> -->
+<script type="text/javascript" src="__STATIC__/home/vender/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="__STATIC__/home/vender/js/smoothscroll.js"></script>
+<script type="text/javascript" src="__STATIC__/ui/layui.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.scroll-to-top').click(function () {
+            window.scroll({top: 0, left: 0, behavior: 'smooth'});
+        });
+//        $("img.lazy-load").lazyload();
+
+    });
+
+</script>
+<{notempty name="$Think.config.system.website_taodianjin"}>
+<{$Think.config.system.website_taodianjin}>
+<{/notempty}>
+
+<!--/_footer 作为公共模版分离出去-->
+<{block name="js"}>
+<{/block}>
+</body>
+</html>
+
+

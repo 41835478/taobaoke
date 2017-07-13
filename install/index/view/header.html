@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{:lang('page_title')}</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/install/css/install.css" />
+    <script type="text/javascript" src="__STATIC__/home/vender/js/jquery-1.11.1.min.js"></script>
+</head>
+
+<body>
+<div class="header">
+    <div class="logo fl"></div>
+    <div class="fr">
+        <h2 class="fr">{:lang('wellcom_user_ftxia')}</h2>
+    </div>
+</div>
+<div class="content">
+    <div class="step fl">
+        <h3></h3>
+        <ul>
+            <li {if condition="$step_curr eq 'eula'"}class="curr"{/if}><span>1</span><h4>{:lang('step_eula')}</h4></li>
+            <li {if condition="$step_curr eq 'check'"}class="curr"{/if}><span>2</span><h4>{:lang('step_check')}</h4></li>
+            <li {if condition="$step_curr eq 'setconf'"}class="curr"{/if}><span>3</span><h4>{:lang('step_setconf')}</h4></li>
+            <li {if condition="$step_curr eq 'install'"}class="curr"{/if}><span>4</span><h4>{:lang('step_install')}</h4></li>
+            <li {if condition="$step_curr eq 'finish'"}class="curr"{/if}><span>5</span><h4>{:lang('step_finish')}</h4></li>
+        </ul>
+    </div>
