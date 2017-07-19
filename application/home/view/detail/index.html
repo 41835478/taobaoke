@@ -187,12 +187,12 @@
                 <a href="<{:url('detail/index',['id'=>$quan.id])}>" target="_self" class="a-title">
                     <{switch name='$quan.user_type'}>
                     <{case value='1'}>
-                    <i class="tmall" title="天猫"></i>
+                    <i class="icon-product-type tmall" title="天猫"></i>
                     <{/case}>
                     <{case value='0'}>
-                    <i class="taobao" title="淘宝"></i>
+                    <i class="icon-product-type taobao" title="淘宝"></i>
                     <{/case}>
-                    <{default /}>
+                    <{default/}>
                     <{/switch}>
                     <{$quan.title}></a>
                 <div class="layui-progress" lay-showPercent="yes">
@@ -223,10 +223,10 @@
                     <div class="product-type">
                         <{switch name='$quan.user_type'}>
                         <{case value='1'}>
-                        <i class="tmall" title="天猫"></i>
+                        <i class="icon-product-type tmall" title="天猫"></i>
                         <{/case}>
                         <{case value='0'}>
-                        <i class="pinpai" title="品牌"></i>
+                        <i class="icon-product-type pinpai" title="品牌"></i>
                         <{/case}>
                         <{default /}>
                         <{/switch}>

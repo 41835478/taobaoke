@@ -71,9 +71,9 @@ class Cate extends Base
             'cate_name.unique'=>'分类名称已存在'
         ];
         if (!isset($data['cate_id'])){
-            $rules = array_merge($rules,['cate_name|分类名称' =>'require|length:2,8|unique:cate']);
+            $rules = array_merge($rules,['cate_name|分类名称' =>'require|length:2,20|unique:cate']);
         }else {
-            $rules = array_merge($rules,['cate_name|分类名称' =>'require|length:2,8']);
+            $rules = array_merge($rules,['cate_name|分类名称' =>'require|length:2,20']);
         }
         $validate = new Validate($rules,$msg);
         if (!$validate->check($data)){

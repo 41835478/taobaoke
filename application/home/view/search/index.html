@@ -1,7 +1,7 @@
 <{extend name="base"/}>
 <{block name="title"}>
 <link rel="stylesheet" href="__STATIC__/home/css/list.css">
-<title><{notempty name="$keyword_title"}><{$keyword_title}><{/notempty}>-<{$Think.config.system.website_title}></title>
+<title><{notempty name="$keyword_title"}><{$keyword_title}><{else/}>所有宝贝<{/notempty}>-<{$Think.config.system.website_title}></title>
 <meta name="description" content="<{$Think.config.system.website_description}>"/>
 <meta name="keywords" content="<{$Think.config.system.website_Keywords}>"/>
 <{/block}>
@@ -18,14 +18,13 @@
     <div class="choose-list product-category">
         <span class="title">商品分类</span>
         <div class="list">
-            <a class="<{if condition='isset($urlInfo.cid)'}><{eq name='$urlInfo.cid' value='all'}>active<{/eq}><{/if}>" href="<{:url('search/index',['keyword'=>$urlInfo.keyword])}>">全部优惠<span>（<{$baseData['cate']['totalNum']}>）</span></a>
+            <a class="<{if condition='isset($urlInfo.cid) && !is_numeric($urlInfo.cid)'}><{in name='$urlInfo.cid' value='all'}>active<{/in}><{/if}>" href="<{:url('search/index',['keyword'=>$urlInfo.keyword])}>">全部优惠<span>（<{$baseData['cate']['totalNum']}>）</span></a>
             <{if condition="!empty($baseData['cate']['cateInfo'])"}>
             <{foreach $baseData['cate']['cateInfo'] as $cate}>
-            <a class="<{if condition='isset($urlInfo.cid) && ($urlInfo.cid === $cate.id)'}>active<{/if}>" href="<{:url('search/index',['cid'=>$cate.id,'keyword'=>$urlInfo.keyword])}>"><{$cate.cate_name}><span>（<{$cate.total}>）</span></a>
+            <a class="<{if condition='isset($urlInfo.cid) && is_numeric($urlInfo.cid) && ($urlInfo.cid == $cate.id)'}>active<{/if}>" href="<{:url('search/index',['cid'=>$cate.id,'keyword'=>$urlInfo.keyword])}>"><{$cate.cate_name}><span>（<{$cate.total}>）</span></a>
             <{/foreach}>
             <{else/}>
             <{/if}>
-
         </div>
     </div>
     <div class="choose-list onsale-type">

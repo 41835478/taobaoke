@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:60:"D:\wamp\www\taobaoke/application/home\view\detail\index.html";i:1499852700;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1499945866;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:60:"D:\wamp\www\taobaoke/application/home\view\detail\index.html";i:1500411845;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1500414802;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,7 +102,7 @@
                     <?php endforeach; else: endif; ?>
                     <li class="header-nav-list">
                         <form class="search-form" method="get" action="<?php echo url('search/index'); ?>">
-                        <input type="text" class="input-search" name="keyword" value="" placeholder="请输入关键词"/>
+                        <input type="text" class="input-search" name="keyword" value="<?php if(!(empty($keyword_title) || (($keyword_title instanceof \think\Collection || $keyword_title instanceof \think\Paginator ) && $keyword_title->isEmpty()))): ?><?php echo $keyword_title; endif; ?>" placeholder="请输入关键词"/>
                         <button type="submit" class="btn btn-search">搜索</button>
                         </form>>
                     </li>
@@ -277,9 +277,9 @@
                 <p class="volume-info">本月已有<span><?php echo $quan['volume']; ?></span>人购买</p>
                 <a href="<?php echo url('detail/index',['id'=>$quan['id']]); ?>" target="_self" class="a-title">
                     <?php switch($quan['user_type']): case "1": ?>
-                    <i class="tmall" title="天猫"></i>
+                    <i class="icon-product-type tmall" title="天猫"></i>
                     <?php break; case "0": ?>
-                    <i class="taobao" title="淘宝"></i>
+                    <i class="icon-product-type taobao" title="淘宝"></i>
                     <?php break; default: endswitch; ?>
                     <?php echo $quan['title']; ?></a>
                 <div class="layui-progress" lay-showPercent="yes">
@@ -309,9 +309,9 @@
                     </div>
                     <div class="product-type">
                         <?php switch($quan['user_type']): case "1": ?>
-                        <i class="tmall" title="天猫"></i>
+                        <i class="icon-product-type tmall" title="天猫"></i>
                         <?php break; case "0": ?>
-                        <i class="pinpai" title="品牌"></i>
+                        <i class="icon-product-type pinpai" title="品牌"></i>
                         <?php break; default: endswitch; ?>
                     </div>
                     <div class="clearfix">

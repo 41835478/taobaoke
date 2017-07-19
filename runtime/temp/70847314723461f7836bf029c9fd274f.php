@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:62:"D:\wamp\www\taobaoke/application/home\view\activity\index.html";i:1499848274;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1499945866;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:62:"D:\wamp\www\taobaoke/application/home\view\activity\index.html";i:1500413775;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1500414802;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,7 +91,7 @@
                     <?php endforeach; else: endif; ?>
                     <li class="header-nav-list">
                         <form class="search-form" method="get" action="<?php echo url('search/index'); ?>">
-                        <input type="text" class="input-search" name="keyword" value="" placeholder="请输入关键词"/>
+                        <input type="text" class="input-search" name="keyword" value="<?php if(!(empty($keyword_title) || (($keyword_title instanceof \think\Collection || $keyword_title instanceof \think\Paginator ) && $keyword_title->isEmpty()))): ?><?php echo $keyword_title; endif; ?>" placeholder="请输入关键词"/>
                         <button type="submit" class="btn btn-search">搜索</button>
                         </form>>
                     </li>
@@ -120,10 +120,10 @@
     <div class="choose-list product-category">
         <span class="title">商品分类</span>
         <div class="list">
-            <a class="<?php if(isset($urlInfo['cid'])): if($urlInfo['cid'] == 'all'): ?>active<?php endif; endif; ?>"
+            <a class="<?php if(isset($urlInfo['cid']) && !is_numeric($urlInfo['cid'])): if(in_array(($urlInfo['cid']), explode(',',"all"))): ?>active<?php endif; endif; ?>"
                href="<?php echo url('activity/index',['aid'=>$urlInfo['aid']]); ?>">全部优惠<span>（<?php echo $baseData['cate']['totalNum']; ?>）</span></a>
             <?php if(!empty($baseData['cate']['cateInfo'])): foreach($baseData['cate']['cateInfo'] as $cate): ?>
-            <a class="<?php if(isset($urlInfo['cid']) && $urlInfo['cid'] === $cate['id']): ?>active<?php endif; ?>"
+            <a class="<?php if(isset($urlInfo['cid']) && is_numeric($urlInfo['cid']) && ($urlInfo['cid'] == $cate['id'])): ?>active<?php endif; ?>"
                href="<?php echo url('activity/index',['cid'=>$cate['id'],'aid'=>$urlInfo['aid']]); ?>"><?php echo $cate['cate_name']; ?><span>（<?php echo $cate['total']; ?>）</span></a>
             <?php endforeach; else: endif; ?>
         </div>

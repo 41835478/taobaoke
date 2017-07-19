@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:72:"D:\wamp\www\taobaoke\public/../application/home\view\activity\index.html";i:1499848274;s:62:"D:\wamp\www\taobaoke\public/../application/home\view\base.html";i:1499874506;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:60:"D:\wamp\www\taobaoke/application/home\view\search\index.html";i:1500452216;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1500414802;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,11 +24,9 @@
 
     
 <link rel="stylesheet" href="__STATIC__/home/css/list.css">
-<link rel="stylesheet" href="__STATIC__/home/css/activity.css">
-
-<title><?php echo $activityName; ?>-<?php echo \think\Config::get('system.website_title'); ?></title>
-<meta name="description" content="<?php echo $activityName; ?>，<?php echo \think\Config::get('system.website_description'); ?>"/>
-<meta name="keywords" content="<?php echo $activityName; ?>，<?php echo \think\Config::get('system.website_Keywords'); ?>"/>
+<title><?php if(!(empty($keyword_title) || (($keyword_title instanceof \think\Collection || $keyword_title instanceof \think\Paginator ) && $keyword_title->isEmpty()))): ?><?php echo $keyword_title; else: ?>所有宝贝<?php endif; ?>-<?php echo \think\Config::get('system.website_title'); ?></title>
+<meta name="description" content="<?php echo \think\Config::get('system.website_description'); ?>"/>
+<meta name="keywords" content="<?php echo \think\Config::get('system.website_Keywords'); ?>"/>
 
 
 </head>
@@ -46,10 +44,10 @@
         </ul>
         <ul class="site-nav-right">
             <li class="site-nav-list">
-                <a href="#">设为首页</a>
+                <a href="javascript:void(0);">内部优惠券</a>
             </li>
             <li class="site-nav-list">
-                <a href="#">加入收藏</a>
+                <a href="javascript:void(0);">实时更新</a>
             </li>
             <li class="site-nav-list">
                 <a href="#">遇到购物问题？请联系我</a>
@@ -91,7 +89,7 @@
                     <?php endforeach; else: endif; ?>
                     <li class="header-nav-list">
                         <form class="search-form" method="get" action="<?php echo url('search/index'); ?>">
-                        <input type="text" class="input-search" name="keyword" value="" placeholder="请输入关键词"/>
+                        <input type="text" class="input-search" name="keyword" value="<?php if(!(empty($keyword_title) || (($keyword_title instanceof \think\Collection || $keyword_title instanceof \think\Paginator ) && $keyword_title->isEmpty()))): ?><?php echo $keyword_title; endif; ?>" placeholder="请输入关键词"/>
                         <button type="submit" class="btn btn-search">搜索</button>
                         </form>>
                     </li>
@@ -120,13 +118,38 @@
     <div class="choose-list product-category">
         <span class="title">商品分类</span>
         <div class="list">
-            <a class="<?php if(isset($urlInfo['cid'])): if($urlInfo['cid'] == 'all'): ?>active<?php endif; endif; ?>"
-               href="<?php echo url('activity/index',['aid'=>$urlInfo['aid']]); ?>">全部优惠<span>（<?php echo $baseData['cate']['totalNum']; ?>）</span></a>
+            <a class="<?php if(isset($urlInfo['cid']) && !is_numeric($urlInfo['cid'])): if(in_array(($urlInfo['cid']), explode(',',"all"))): ?>active<?php endif; endif; ?>" href="<?php echo url('search/index',['keyword'=>$urlInfo['keyword']]); ?>">全部优惠<span>（<?php echo $baseData['cate']['totalNum']; ?>）</span></a>
             <?php if(!empty($baseData['cate']['cateInfo'])): foreach($baseData['cate']['cateInfo'] as $cate): ?>
-            <a class="<?php if(isset($urlInfo['cid']) && $urlInfo['cid'] === $cate['id']): ?>active<?php endif; ?>"
-               href="<?php echo url('activity/index',['cid'=>$cate['id'],'aid'=>$urlInfo['aid']]); ?>"><?php echo $cate['cate_name']; ?><span>（<?php echo $cate['total']; ?>）</span></a>
+            <a class="<?php if(isset($urlInfo['cid']) && is_numeric($urlInfo['cid']) && ($urlInfo['cid'] == $cate['id'])): ?>active<?php endif; ?>" href="<?php echo url('search/index',['cid'=>$cate['id'],'keyword'=>$urlInfo['keyword']]); ?>"><?php echo $cate['cate_name']; ?><span>（<?php echo $cate['total']; ?>）</span></a>
             <?php endforeach; else: endif; ?>
         </div>
+    </div>
+    <div class="choose-list onsale-type">
+        <span class="title">促销类型</span>
+        <div class="list">
+            <div class="checkbox-list">
+                <a class="<?php if(isset($urlInfo['type']) && $urlInfo['type'] ==1): ?>active<?php endif; ?>" href="<?php echo url('search/index',['keyword'=>$urlInfo['keyword'],'cid'=>$urlInfo['cid'],'type'=>1]); ?>" target="_self">
+                    <i class="iconfont icon-checkbox"></i>
+                    天猫
+                </a>
+            </div>
+
+            <?php if(!empty($baseData['activity'])): foreach($baseData['activity'] as $activity): ?>
+            <div class="checkbox-list">
+                <a class="<?php if(isset($urlInfo['aid']) && $urlInfo['aid'] == $activity['id']): ?>active<?php endif; ?>" href="<?php echo url('search/index',['keyword'=>$urlInfo['keyword'],'cid'=>$urlInfo['cid'],'aid'=>$activity['id']]); ?>" target="_self">
+                    <i class="iconfont icon-checkbox"></i>
+                    <?php echo $activity['activity_name']; ?>
+                </a>
+            </div>
+            <?php endforeach; else: endif; ?>
+
+            <div class="checkbox-list confirm">
+                <!--<button class="btn btn-confirm" type="button" name="button">确定</button>-->
+                <a href="<?php echo url('search/index',['cid'=>$urlInfo['cid']]); ?>" class="btn btn-reset" name="button">重置</a>
+            </div>
+
+        </div>
+
     </div>
 </div>
 <!-- choose category and type end -->
@@ -134,25 +157,25 @@
 <!--product sort type start-->
 <div class="product-sort-container">
     <ul class="product-sort-list">
-        <li class="sort-list <?php if($urlInfo['sort'] == 'multiple'): ?>active<?php endif; ?>">
-            <a href="<?php echo url('activity/index',array_merge($urlInfo,['sort'=>'multiple'])); ?>" data-sort="1">综合</a>
+        <li class="sort-list <?php if($urlInfo['sort'] == 'multiple'): ?>active<?php endif; ?>" >
+            <a href="<?php echo url('search/index',array_merge($urlInfo,['sort'=>'multiple'])); ?>" data-sort="1">综合</a>
         </li>
         <li class="sort-list <?php if($urlInfo['sort'] == 'latest'): ?>active<?php endif; ?>">
-            <a href="<?php echo url('activity/index',array_merge($urlInfo,['sort'=>'latest'])); ?>" data-sort="2">最新</a>
+            <a href="<?php echo url('search/index',array_merge($urlInfo,['sort'=>'latest'])); ?>" data-sort="2">最新</a>
         </li>
-        <li class="sort-list <?php if($urlInfo['sort'] == 'volume'): ?>active<?php endif; ?>">
-            <a href="<?php echo url('activity/index',array_merge($urlInfo,['sort'=>'volume'])); ?>" data-sort="3">销量</a>
+        <li class="sort-list <?php if($urlInfo['sort'] == 'volume'): ?>active<?php endif; ?>" >
+            <a href="<?php echo url('search/index',array_merge($urlInfo,['sort'=>'volume'])); ?>" data-sort="3">销量</a>
         </li>
         <li class="sort-list <?php if($urlInfo['sort'] == 'quan'): ?>active<?php endif; ?>">
-            <a href="<?php echo url('activity/index',array_merge($urlInfo,['sort'=>'quan'])); ?>" data-sort="4">领券量</a>
+            <a href="<?php echo url('search/index',array_merge($urlInfo,['sort'=>'quan'])); ?>" data-sort="4">领券量</a>
         </li>
-        <li class="sort-list <?php if($urlInfo['sort'] == 'price'): ?>active<?php endif; ?>">
-            <a href="<?php echo url('activity/index',array_merge($urlInfo,['sort'=>'price'])); ?>" data-sort="5">价格</a>
+        <li class="sort-list <?php if($urlInfo['sort'] == 'price'): ?>active<?php endif; ?>" >
+            <a href="<?php echo url('search/index',array_merge($urlInfo,['sort'=>'price'])); ?>" data-sort="5">价格</a>
         </li>
     </ul>
     <ul class="page-items">
         <li class="item">
-            <a class="link-left" href="<?php echo url('activity/index',array_merge($urlInfo,['page'=>$pageInfo['cur']-1])); ?>">
+            <a class="link-left" href="<?php echo url('search/index',array_merge($urlInfo,['page'=>$pageInfo['cur']-1])); ?>">
                 <i class="iconfont icon-left"></i>
             </a>
         </li>
@@ -160,7 +183,7 @@
             <span><?php echo $pageInfo['cur']; ?></span>/<span><?php echo $pageInfo['totalPage']; ?></span>
         </li>
         <li class="item">
-            <a class="link-right" href="<?php echo url('activity/index',array_merge($urlInfo,['page'=>$pageInfo['cur']+1])); ?>">
+            <a class="link-right" href="<?php echo url('search/index',array_merge($urlInfo,['page'=>$pageInfo['cur']+1])); ?>">
                 <i class="iconfont icon-right"></i>
             </a>
         </li>
@@ -172,84 +195,70 @@
 <!--product sort type end-->
 
 
-<!--活动商品列表 start-->
 
+<!-- 领券优惠直播 start -->
 <section class="list-container realtime-products">
     <div class="list-products realtime-products">
 
         <?php if(!empty($baseData['quan'])): foreach($baseData['quan'] as $quan): ?>
         <div class="product-item realtime-product-item">
-            <div class="icon-quan">
-                <span>券</span><span>¥<?php echo $quan['coupon_info']; ?></span>
+            <a href="<?php echo url('detail/index',['id'=>$quan['id']]); ?>" target="_blank">
+                <!--<img class="lazy-load" data-original="<?php echo $quan['pict_url']; ?>" src="__STATIC__/home/images/lazy.jpg"
+                     alt="<?php echo $quan['title']; ?>" title="<?php echo $quan['title']; ?>">-->
+                <img class="lazy-load" data-original="<?php echo $quan['pict_url']; ?>" src="<?php echo $quan['pict_url']; ?>"
+                     alt="<?php echo $quan['title']; ?>" title="<?php echo $quan['title']; ?>">
+            </a>
+            <div class="price-quan">
+
+                <i class="icon-cny">¥</i>
+                <span class="now-price"><?php echo floor($quan['zk_final_price']-$quan['coupon_info']); ?></span>
+                <span class="title">券后价</span>
+                <span class="old-price">
+                        <i class="icon-cny">¥</i>
+                        <?php echo floor($quan['zk_final_price']); ?></span>
+                <div class="quan-show">
+                    <em class="left"></em>
+                    <span class="quan-name">券</span>
+                    <span class="quan-price">¥<?php echo $quan['coupon_info']; ?></span>
+                    <em class="right"></em>
+                </div>
+            </div>
+            <div class="border-line">
 
             </div>
-            <div class="product-content">
-                <div class="image-link">
-                    <a href="<?php echo url('detail/index',['id'=>$quan['id']]); ?>" target="_blank">
-                        <img class="lazy-load" data-original="<?php echo $quan['pict_url']; ?>" src="<?php echo $quan['pict_url']; ?>"
-                             alt="<?php echo $quan['title']; ?>" title="<?php echo $quan['title']; ?>">
-                    </a>
-                    <div class="link-title">
-                        <a class="link-list" href="<?php echo $quan['click_url']; ?>" target="_blank">直接购买
-                        </a>
-                        <a class="link-list" href="<?php echo $quan['coupon_click_url']; ?>" target="_blank">领券购买
-                        </a>
-                    </div>
-                    <div class="link-background"></div>
-                </div>
-
-                <p class="volume-info">本月已有<span><?php echo $quan['volume']; ?></span>人购买</p>
-                <a href="<?php echo url('detail/index',['id'=>$quan['id']]); ?>" target="_blank" class="a-title">
-                    <?php switch($quan['user_type']): case "1": ?>
-                    <i class="icon-product-type tmall" title="天猫"></i>
-                    <?php break; case "0": ?>
-                    <i class="icon-product-type taobao" title="淘宝"></i>
-                    <?php break; default: endswitch; ?>
-                    <?php echo $quan['title']; ?></a>
-                <div class="layui-progress" lay-showPercent="yes">
-                    <div class="layui-progress-bar" lay-percent="<?php echo round(($quan['coupon_total_count']-$quan['coupon_remain_count'])*100/$quan['coupon_total_count']); ?>%" ></div>
-                </div>
-                <div class="price-info">
-                    <div class="now-price price-list">
-                        <p><b>¥</b><?php echo floor($quan['zk_final_price']-$quan['coupon_info']); ?></p>
-                        <p>券后价</p>
-                    </div>
-                    <div class="quan price-list">
-                        <p><b>¥</b><?php echo $quan['coupon_info']; ?></p>
-                        <p>优惠券</p>
-                    </div>
-                    <div class="old-price price-list">
-                        <p><b>¥</b><?php echo floor($quan['zk_final_price']); ?></p>
-                        <p>原价</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="product-num-type">
-                    <div class="product-num">
+            <p class="title"><a href="<?php echo url('detail/index',['id'=>$quan['id']]); ?>" target="_blank"><?php echo $quan['title']; ?></a></p>
+            <div class="product-num-type">
+                <div class="product-num">
                         <span class="product-sale-num"><?php if($urlInfo['sort'] =='quan'): ?>领券量<?php else: ?>销量<?php endif; ?>
                             <b><?php if($urlInfo['sort'] =='quan'): ?><?php echo $quan['coupon_total_count']-$quan['coupon_remain_count']; else: ?><?php echo $quan['volume']; endif; ?></b>
                         </span>
-                    </div>
-                    <div class="product-type">
-                        <?php switch($quan['user_type']): case "1": ?>
-                        <i class="icon-product-type tmall" title="天猫"></i>
-                        <?php break; case "0": ?>
-                        <i class="icon-product-type pinpai" title="淘宝"></i>
-                        <?php break; default: endswitch; ?>
-                    </div>
-                    <div class="clearfix">
-                    </div>
                 </div>
-                <div class="border-line"></div>
-                <p class="quan-num">优惠券剩余量<b><?php echo $quan['coupon_remain_count']; ?></b>/<?php echo $quan['coupon_total_count']; ?></p>
-                <p class="seller-name">店铺名：<b><?php echo $quan['nick']; ?></b></p>
+                <div class="product-type">
+                    <?php switch($quan['user_type']): case "1": ?>
+                    <i class="icon-product-type tmall" title="天猫"></i>
+                    <?php break; case "0": ?>
+                    <i class="icon-product-type pinpai" title="淘宝"></i>
+                    <?php break; default: endswitch; ?>
+
+                    <!--
+                   <i class="miaosha" title="秒杀"></i>
+                    <i class="tmall" title="天猫"></i>
+                    <i class="trans" title="运费险"></i>
+                    <i class="you" title="优品"></i>
+                    <i class="pinpai" title="品牌"></i>
+                    <i class="haitao" title="海淘"></i>
+                    -->
+                </div>
+                <div class="clearfix">
+                </div>
 
             </div>
+
         </div>
         <?php endforeach; else: ?>
         <div class="empty" style="text-align: center">
             <i class="iconfont icon-meiyougengduo" style="font-size: 180px;"></i>
-            <h1 style="font-size: 30px">客官，您可以移步去别的分类看看哦</h1>
+            <h1 style="font-size: 30px">客官，搜索不到东西哦</h1>
         </div>
         <?php endif; ?>
 
@@ -257,8 +266,7 @@
         <div class="clearfix"></div>
     </div>
 </section>
-
-<!--活动商品列表- end-->
+<!-- 领券优惠直播 end -->
 
 <!--分页-->
 <div id="page"></div>
@@ -317,19 +325,18 @@
 <script type="text/javascript" src="__STATIC__/home/js/base.js">
 </script>
 <script type="text/javascript">
-    layui.use(['laypage', 'element'], function () {
+    layui.use(['laypage'], function(){
         var laypage = layui.laypage;
-        var element = layui.element();
         laypage({
             cont: 'page',
             pages: page,
-            curr: cur,
-            skin: '#f8c',
+            curr:cur,
+            skin:'#f8c',
             skip: true,
-            jump: function (obj, first) {
+            jump:function (obj, first) {
                 if (!first) {
                     //点击跳页触发函数自身，并传递当前页：obj.curr
-                    location.href = '<?php echo url("activity/index",$urlInfo); ?>' + '?page=' + obj.curr;
+                    location.href= '<?php echo url("search/index",$urlInfo); ?>'+'?page='+obj.curr;
                 }
 
             }

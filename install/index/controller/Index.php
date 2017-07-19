@@ -49,7 +49,8 @@ class Index extends Controller
         $flag = true;
         //检测文件夹权限
         $check_file = [
-            ROOT_PATH . 'public/uploads ',
+            ROOT_PATH . 'public/uploads',
+            ROOT_PATH . 'install',
             ROOT_PATH . 'public/data',
             ROOT_PATH . 'application/extra/system.php',
             ROOT_PATH . 'application/database.php',

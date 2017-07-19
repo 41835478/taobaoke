@@ -1,4 +1,5 @@
 <?php
+use think\Route;
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -9,13 +10,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-return [
-    '__pattern__' => [
-        'name' => '\w+',
-    ],
-    '[hello]'     => [
-        ':id'   => ['home/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['home/hello', ['method' => 'post']],
-    ],
+//Route::get('/', 'home/Index/index');
+//Route::get('q_show', 'home/Quan/index');
 
-];
+

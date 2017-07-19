@@ -20,11 +20,11 @@
     <div class="choose-list product-category">
         <span class="title">商品分类</span>
         <div class="list">
-            <a class="<{if condition='isset($urlInfo.cid)'}><{eq name='$urlInfo.cid' value='all'}>active<{/eq}><{/if}>"
+            <a class="<{if condition='isset($urlInfo.cid) && !is_numeric($urlInfo.cid)'}><{in name='$urlInfo.cid' value='all'}>active<{/in}><{/if}>"
                href="<{:url('activity/index',['aid'=>$urlInfo.aid])}>">全部优惠<span>（<{$baseData['cate']['totalNum']}>）</span></a>
             <{if condition="!empty($baseData['cate']['cateInfo'])"}>
             <{foreach $baseData['cate']['cateInfo'] as $cate}>
-            <a class="<{if condition='isset($urlInfo.cid) && $urlInfo.cid === $cate.id'}>active<{/if}>"
+            <a class="<{if condition='isset($urlInfo.cid) && is_numeric($urlInfo.cid) && ($urlInfo.cid == $cate.id)'}>active<{/if}>"
                href="<{:url('activity/index',['cid'=>$cate.id,'aid'=>$urlInfo.aid])}>"><{$cate.cate_name}><span>（<{$cate.total}>）</span></a>
             <{/foreach}>
             <{else/}>
