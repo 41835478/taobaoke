@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:59:"D:\wamp\www\taobaoke/application/home\view\index\index.html";i:1501636038;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1500414802;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:59:"D:\wamp\www\taobaoke/application/home\view\index\index.html";i:1501636038;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1501642144;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -127,7 +127,7 @@
                         <form class="search-form" method="get" action="<?php echo url('search/index'); ?>">
                         <input type="text" class="input-search" name="keyword" value="<?php if(!(empty($keyword_title) || (($keyword_title instanceof \think\Collection || $keyword_title instanceof \think\Paginator ) && $keyword_title->isEmpty()))): ?><?php echo $keyword_title; endif; ?>" placeholder="请输入关键词"/>
                         <button type="submit" class="btn btn-search">搜索</button>
-                        </form>>
+                        </form>
                     </li>
                 </ul>
 
