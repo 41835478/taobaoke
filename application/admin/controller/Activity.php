@@ -43,6 +43,7 @@ class Activity extends Base
         }
         $this->assign('activityList',$info);
         $this->assign('pageInfo',['page'=>$page,'cur'=>$cur,'total'=>$total]);
+
         return $this->fetch();
     }
 
