@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:59:"D:\wamp\www\taobaoke/application/home\view\index\index.html";i:1499937546;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1500414802;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:59:"D:\wamp\www\taobaoke/application/home\view\index\index.html";i:1501636038;s:52:"D:\wamp\www\taobaoke/application/home\view\base.html";i:1500414802;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -275,12 +275,11 @@
             </div>
             <div class="quan-link">
                 <div class="quan-price">
-                    <div class="current-price">
-                        <span><?php echo floor($skill['zk_final_price']-$skill['coupon_info']); ?></span>
-                    </div>
+                    <span class="current-price"><?php echo floor($skill['zk_final_price']-$skill['coupon_info']); ?></span>
                     <div class="old-price">
                         <span>￥<?php echo floor($skill['zk_final_price']); ?></span>
                         <span>券后价</span>
+
                     </div>
 
                 </div>

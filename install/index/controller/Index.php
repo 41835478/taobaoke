@@ -84,7 +84,6 @@ class Index extends Controller
             $flag = false;
         }
 
-
         if (!$flag) {
             $this->assign('error', $error);
             $this->assign('step_curr', 'check');
@@ -125,6 +124,7 @@ class Index extends Controller
             //试着连接数据库
 
             $pdo = $this->pdoConnect($post['db_host'], $post['db_name'], $post['db_user'], $post['db_pass'], $post['db_port']);
+
             if ($pdo === true) {
                 $path = ROOT_PATH . 'public/data/';
                 $info = set_config($path, 'data.php', $post);
@@ -136,7 +136,8 @@ class Index extends Controller
                 }
 
             } else {
-                $this->assign('error_msg', lang('connect_mysql_error'));
+                //$this->assign('error_msg', lang('connect_mysql_error'));
+                $this->assign('error_msg', lang($pdo));
                 return $this->fetch();
             }
 
@@ -260,13 +261,22 @@ class Index extends Controller
         try {
             $pdo = new \PDO($dsn, $username, $password); //初始化一个PDO对象
             $pdo->exec('set names utf8');
-            $this->state = true;
-            return true;
+            if ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) == 'mysql') {
+                $this->state = true;
+                return true;
+            }else{
+                $this->state = false;
+                return '找不到mysql驱动';
+            }
+
+
 
         } catch (\PDOException $e) {
             $this->state = false;
-            return $e->getMessage();
-            //die ("Error!: " . $e->getMessage() . "<br/>");
+            //return $e->getMessage();
+            //return $e->getMessage();
+
+            die ("Error!: " . $e->getCode() . "<br/>");
         }
 
 
